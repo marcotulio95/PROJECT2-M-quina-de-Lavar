@@ -1,4 +1,4 @@
-# Arquitetura de computador - Universidade Federal de Goiás
+# Arquitetura de computador - Universidade Federal de Goiás:
 --------------------------------------------------------------------------------
 Este repositorio é voltado para o segundo projeto desenvolvido na disciplina Arquitetura de computadores para a Universidade Federal de Goiás no semestre 2016-2. Onde estaremos desenvolvendo um projeto para simular o funcionamento de uma máquina de lavar-roupas.
 --------------------------------------------------------------------------------

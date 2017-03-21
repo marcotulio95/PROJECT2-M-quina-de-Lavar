@@ -1,10 +1,14 @@
 # Arquitetura de computador - Universidade Federal de Goiás
 --------------------------------------------------------------------------------
 Este repositorio é voltado para o segundo projeto desenvolvido na disciplina Arquitetura de computadores para a Universidade Federal de Goiás no semestre 2016-2. Onde estaremos desenvolvendo um projeto para simular o funcionamento de uma máquina de lavar-roupas.
-
+--------------------------------------------------------------------------------
+## Desenvolvido pelos alunos:
+*	Marco Túlio Macedo Rodrigues
+*	Pablo da Silva Viniciues
+*	Vitor do Vale Bernardo
 --------------------------------------------------------------------------------
 ## Máquina de Lavar (Modos de Operação):
---------------------------------------------------------------------------------
+
 ## Modo Rápido (Roupas Leves):
 		* Enche a maquina de agua (sabão) de acordo com o nivel selecionado;
 		* bate as roupas (40% da potencia) por 5 minutos ;

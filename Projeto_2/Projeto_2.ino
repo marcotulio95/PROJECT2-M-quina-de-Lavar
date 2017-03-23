@@ -1,46 +1,31 @@
 #include <EEPROM.h>
 
-#define bomba =  13; // Pino que ativa a bomba
-#define motor =  12; // Pino que ativa o motor
+#define bomba  13 // Pino que ativa a bomba
+#define motor  12 // Pino que ativa o motor
 
-#define led_nivel_1 =  11; // Pino que o led1 (Nivel 1)
-#define led_nivel_2 =  10; //Pino que o led2 (Nivel 2)
-#define led_nivel_3 =  9; //Pino que o led3 (Nivel 3)
+#define led_nivel_1  11 // Pino que o led1 (Nivel 1)
+#define led_nivel_2  10 //Pino que o led2 (Nivel 2)
+#define led_nivel_3  9 //Pino que o led3 (Nivel 3)
 
-#define led_modo_1 =  8; // Pino que o led1 (Nivel Leve)
-#define led_modo_2 =  7; //Pino que o led2 (Nivel Normal)
-#define led_modo_3 =  6; //Pino que o led3 (Nivel Pesado)
+#define led_modo_1  8  // Pino que o led1 (Nivel Leve)
+#define led_modo_2  7  //Pino que o led2 (Nivel Normal)
+#define led_modo_3  6  //Pino que o led3 (Nivel Pesado)
 
-#define button_seleciona_nivel = 5; // Pino para entrada do nivel desejado
-#define button_seleciona_modo = 4; // Pino para entrada do modo desejado
+#define button_seleciona_nivel 2 // Pino para entrada do nivel desejado
+#define button_seleciona_modo 3 // Pino para entrada do modo desejado
+
+
 int addr = 0; // Posicao Inicial da Memoria
 const int LM35 = A0; // Pino que verifica o nivel de agua
 float temperatura; // Variável que armazenará a temperatura medida
 int   saida;
 
+int nivel = 0;
+int modo = 0;
+
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 
-void setup() {
-  
-  Serial.begin(9600); // inicializa a comunicação serial
-  
-  // Inicialia os pinos de saida
-  pinMode(bomba, OUTPUT);
-  pinMode(motor, OUTPUT);
-    
-  pinMode(led_nivel_1, OUTPUT);
-  pinMode(led_nivel_2, OUTPUT);
-  pinMode(led_nivel_3, OUTPUT);
-  
-  pinMode(led_modo_1, OUTPUT);
-  pinMode(led_modo_2, OUTPUT);
-  pinMode(led_modo_3, OUTPUT);
-
-//Inicializa os pinos de entrada
-  pinMode(button_seleciona_nivel, INPUT);
-  pinMode(button_seleciona_modo, INPUT);
-}
 
 void lerEprom(){
 
@@ -175,12 +160,114 @@ boolean modoNormal(){
  
  }
 
+void ligar_Led_Nivel(){
+
+  if(nivel == 0){
+    Serial.print("Nivel 0");
+    digitalWrite(led_nivel_1, LOW);
+    digitalWrite(led_nivel_2, LOW);
+    digitalWrite(led_nivel_3, LOW);
+  } 
+  if(nivel == 1){
+    Serial.print("Nivel 1");
+    digitalWrite(led_nivel_1, HIGH);
+    digitalWrite(led_nivel_2, LOW);
+    digitalWrite(led_nivel_3, LOW);
+  }
+  if(nivel == 2){
+    Serial.print("Nivel 2");
+    digitalWrite(led_nivel_1, HIGH);
+    digitalWrite(led_nivel_2, HIGH);
+    digitalWrite(led_nivel_3, LOW);
+  }
+  if(nivel == 3){
+    Serial.print("Nivel 3");
+    digitalWrite(led_nivel_1, HIGH);
+    digitalWrite(led_nivel_2, HIGH);
+    digitalWrite(led_nivel_3, HIGH);
+  }
+  
+}
+
+void ligar_Led_Modo(){
+
+  if (modo == 0){
+    Serial.print("Modo 0");
+    digitalWrite(led_modo_1, LOW);
+    digitalWrite(led_modo_2, LOW);
+    digitalWrite(led_modo_3, LOW);
+    }
+  if(modo == 1){
+    Serial.print("Modo 1");
+    digitalWrite(led_modo_1, HIGH);
+    digitalWrite(led_modo_2, LOW);
+    digitalWrite(led_modo_3, LOW);
+  }
+  
+  if(modo == 2){
+    Serial.print("Modo 2");
+    digitalWrite(led_modo_1, HIGH);
+    digitalWrite(led_modo_2, HIGH);
+    digitalWrite(led_modo_3, LOW);
+  } 
+  
+  if(modo == 3){
+    Serial.print("Modo 3");
+    digitalWrite(led_modo_1, HIGH);
+    digitalWrite(led_modo_2, HIGH);
+    digitalWrite(led_modo_3, HIGH);
+  }
+  
+}
+
+void selecionarNivel(){
+  nivel++;
+  ligar_Led_Nivel();
+  
+  if(nivel > 3){
+      nivel = 0; 
+    }
+  delay(500);
+}
+
+void selecionarModo(){
+  modo++;
+  ligar_Led_Modo();
+  if (modo > 3){
+    modo = 0;  
+  }
+  delay(500);
+}
+
+void setup() {
+  
+  Serial.begin(9600); // inicializa a comunicação serial
+  
+  // Inicialia os pinos de saida
+  pinMode(bomba, OUTPUT);
+  pinMode(motor, OUTPUT);
+    
+  pinMode(led_nivel_1, OUTPUT);
+  pinMode(led_nivel_2, OUTPUT);
+  pinMode(led_nivel_3, OUTPUT);
+  
+  pinMode(led_modo_1, OUTPUT);
+  pinMode(led_modo_2, OUTPUT);
+  pinMode(led_modo_3, OUTPUT);
+
+//Inicializa os pinos de entrada
+  pinMode(button_seleciona_nivel, INPUT);
+  pinMode(button_seleciona_modo, INPUT);
+
+  attachInterrupt(digitalPinToInterrupt(2), selecionarNivel, RISING);  //Selecionar Nivel
+  attachInterrupt(digitalPinToInterrupt(3), selecionarModo, RISING); // Selecionar Modo
+}
 
 void loop() {
   // read the state of the pushbutton value:
   //buttonState = digitalRead(buttonPin);
-
-  modoRapido();
+  //selecionarNivel();
+  //modoRapido();
  delay(1000);
     /*  
       // turn LED on:

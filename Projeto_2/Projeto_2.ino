@@ -96,6 +96,7 @@ void ligar_bomba(int nivel_agua){
                 analogWrite(bomba, 0);
                 break;
           case 3: // Colocar agua até o nivel3          
+                Serial.println("Case 3");
                 analogWrite(bomba, 254);
                 while(analogRead(LM35) < 1023){                  
                     temperatura = analogRead(LM35);
@@ -152,7 +153,7 @@ boolean modoNormal(){
     ligar_bomba(0);// Ligar a bomba para tirar agua; (Tirando agua suja)
     ligar_bomba(nivel);// Ligar a bomba para colcoar agua(Nivel); (Colocando agua limpa)
     ligar_motor(5); // Ligar motor por 5 minutos
-    ligar_bomba(nivel);// Ligar a bomba para tirar agua; (Tirando agua suja)
+    ligar_bomba(0);// Ligar a bomba para tirar agua; (Tirando agua suja)
     Serial.println("Centrifugando por 10 segundos");
     ligar_motor(10); // Ligar o motor; (Centrifugando)
     Serial.println("Roupas Lavadas no modo Normal");
@@ -288,11 +289,11 @@ void historico(){
   while(address < addr){
         estado = EEPROM.read(address);
         Serial.println(" --------------------");
-        if(estado == 1){ Serial.println("|Modo Rapido       |");}
-        if(estado == 2){ Serial.println("|Modo Normal       |");}
-        if(estado == 3){ Serial.println("|Modo Pesado       |");}
-        Serial.print("|Nivel de agual: "); Serial.print(EEPROM.read(address++));Serial.println(" |");
-        Serial.print("|Data: "); Serial.print(EEPROM.read(address++));
+        if(estado == 1){ Serial.println("| Modo Rapido       |");}
+        if(estado == 2){ Serial.println("| Modo Normal       |");}
+        if(estado == 3){ Serial.println("| Modo Pesado       |");}
+        Serial.print("| Nivel de agual: "); Serial.print(EEPROM.read(address++));Serial.println(" |");
+        Serial.print("| Data: "); Serial.print(EEPROM.read(address++));
         Serial.print("/"); Serial.print(EEPROM.read(address++));
         Serial.print("/"); Serial.print(EEPROM.read(address++)); Serial.println("     |");
         Serial.println(" --------------------");
@@ -342,15 +343,15 @@ void loop() {
     switch(modo){
       
       case 1: Serial.println("Modo Rapido Selecionado");
-              //modoRapido();
+              modoRapido();
               salvarEstado();
               break;
       case 2: Serial.println("Modo Normal Selecionado");
-              //modoNormal();
+              modoNormal();
               salvarEstado();
               break;
       case 3: Serial.println("Modo Pesado Selecionado");
-              //modoPesado(); // Salvar Estado
+              modoPesado(); // Salvar Estado
               salvarEstado();
               break;
       default:  Serial.println("Nenhum Modo Selecionado");

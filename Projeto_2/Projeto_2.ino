@@ -77,7 +77,7 @@ void ligar_bomba(int nivel_agua){
                 break;         
           
           case 1: // Colocar agua até o nivel1
-                analogWrite(bomba, 254);
+                analogWrite(bomba, 80);
                 while(analogRead(LM35) < 360){  // Menor que 35% 
                       temperatura = analogRead(LM35);
                     Serial.print("Nivel1: ");
@@ -87,7 +87,7 @@ void ligar_bomba(int nivel_agua){
                 break;
                 
           case 2: // Colocar agua até o nivel2
-                analogWrite(bomba, 254);
+                analogWrite(bomba, 150);
                 while(analogRead(LM35) < 614){ // Menor que 60%                  
                     temperatura = analogRead(LM35);
                     Serial.print("Nivel2: ");
@@ -125,7 +125,7 @@ void ligar_motor(int tempo){
 void modoRapido(){
  
   // Ligar a bomba para colocar agua (Nivel);
-  ligar_bomba(nivel); // Passando nivel 1 de agua
+  ligar_bomba(nivel); // Passando nivel de agua
   ligar_motor(5); // Passando 5 minutos
   Serial.println("Molho por 5 segundos");
   delay(5000); // Molho
@@ -324,24 +324,17 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(3), selecionarModo, RISING); // Selecionar Modo
 }
 
-void loop() {
-
-  
+void loop() {  
  buttonState = digitalRead(button_start_system);
-
- if (Serial.available() > 0) {
-    
+ if (Serial.available() > 0) {    
     incomingByte = Serial.read();
     if (incomingByte == 'H') {
         historico();
-    }
-  
-  }
- 
+    }  
+  } 
  if (buttonState == HIGH){
     Serial.println("System ON");
-    switch(modo){
-      
+    switch(modo){      
       case 1: Serial.println("Modo Rapido Selecionado");
               modoRapido();
               salvarEstado();
@@ -363,32 +356,4 @@ void loop() {
  }
   delay(50);
  
-    /*  
-      // turn LED on:
-      digitalWrite(ledPin, HIGH);
-      temperatura = (float(analogRead(LM35))*5/(1023))/0.01;
-      Serial.print("Temperatura: ");
-      Serial.println(temperatura);
-      EEPROM.write(addr, temperatura);
-      
-      // see if there's incoming serial data:
-      if (Serial.available() > 0){
-        
-        // read the oldest byte in the serial buffer:  
-        saida = Serial.read();  
-          // if it's a capital H (ASCII 72), chama a funcao lerEprom:
-        if (saida == 'H')
-          {
-              lerEprom();
-              delay(500);
-          }
-      
-      }
-      
-      addr = addr + 1;
-      delay(2000);
-      // turn LED off:
-      digitalWrite(ledPin, LOW);
-  delay(1000);
- */
 }

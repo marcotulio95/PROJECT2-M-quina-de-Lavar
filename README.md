@@ -7,8 +7,12 @@
 *	Pablo da Silva Viniciues
 *	Vitor do Vale Bernardo
 --------------------------------------------------------------------------------
-## Máquina de Lavar (Modos de Operação):
+## Esquemático de Montagem:
 
+<p align="center"><img width="40%" src="img/projeto_finalizado.png" /></p>
+--------------------------------------------------------------------------------
+
+## Máquina de Lavar (Modos de Operação):
 ## Modo Rápido (Roupas Leves):
 		* Enche a maquina de agua (sabão) de acordo com o nivel selecionado;
 		* bate as roupas (40% da potencia) por 5 minutos ;
